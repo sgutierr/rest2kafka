@@ -7,12 +7,12 @@
             "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Namespace\",\"metadata\":{\"annotations\":{\"argocd.argoproj.io/sync-wave\":\"0\",\"openshift.io/description\":\"appdev-streams\",\"openshift.io/display-name\":\"appdev-streams\"},\"labels\":{\"app.kubernetes.io/instance\":\"rest2kafka-demo-deploy\",\"argocd.argoproj.io/managed-by\":\"openshift-gitops\"},\"name\":\"appdev-streams\"}}\n",
             "openshift.io/description": "appdev-streams",
             "openshift.io/display-name": "appdev-streams",
-            "openshift.io/sa.scc.mcs": "s0:c29,c14",
-            "openshift.io/sa.scc.supplemental-groups": "1000840000/10000",
-            "openshift.io/sa.scc.uid-range": "1000840000/10000"
+            "openshift.io/sa.scc.mcs": "s0:c29,c19",
+            "openshift.io/sa.scc.supplemental-groups": "1000850000/10000",
+            "openshift.io/sa.scc.uid-range": "1000850000/10000"
         },
-        "creationTimestamp": "2025-02-27T15:48:25Z",
-        "deletionTimestamp": "2025-02-27T15:53:43Z",
+        "creationTimestamp": "2025-02-27T15:55:41Z",
+        "deletionTimestamp": "2025-02-27T16:05:56Z",
         "labels": {
             "app.kubernetes.io/instance": "rest2kafka-demo-deploy",
             "kubernetes.io/metadata.name": "appdev-streams",
@@ -22,8 +22,8 @@
             "pod-security.kubernetes.io/warn-version": "v1.24"
         },
         "name": "appdev-streams",
-        "resourceVersion": "246052",
-        "uid": "22d1e113-eee7-4b60-8b65-eb991f4f0534"
+        "resourceVersion": "254585",
+        "uid": "f8153e8d-c3c1-490b-936f-12296dc1adf0"
     },
     "spec": {
         "finalizers": [
@@ -33,35 +33,35 @@
     "status": {
         "conditions": [
             {
-                "lastTransitionTime": "2025-02-27T15:53:49Z",
+                "lastTransitionTime": "2025-02-27T16:06:02Z",
                 "message": "All resources successfully discovered",
                 "reason": "ResourcesDiscovered",
                 "status": "False",
                 "type": "NamespaceDeletionDiscoveryFailure"
             },
             {
-                "lastTransitionTime": "2025-02-27T15:53:49Z",
+                "lastTransitionTime": "2025-02-27T16:06:02Z",
                 "message": "All legacy kube types successfully parsed",
                 "reason": "ParsedGroupVersions",
                 "status": "False",
                 "type": "NamespaceDeletionGroupVersionParsingFailure"
             },
             {
-                "lastTransitionTime": "2025-02-27T15:53:49Z",
+                "lastTransitionTime": "2025-02-27T16:06:02Z",
                 "message": "All content successfully deleted, may be waiting on finalization",
                 "reason": "ContentDeleted",
                 "status": "False",
                 "type": "NamespaceDeletionContentFailure"
             },
             {
-                "lastTransitionTime": "2025-02-27T15:53:49Z",
+                "lastTransitionTime": "2025-02-27T16:06:02Z",
                 "message": "Some resources are remaining: kafkatopics.kafka.strimzi.io has 2 resource instances",
                 "reason": "SomeResourcesRemain",
                 "status": "True",
                 "type": "NamespaceContentRemaining"
             },
             {
-                "lastTransitionTime": "2025-02-27T15:53:49Z",
+                "lastTransitionTime": "2025-02-27T16:06:02Z",
                 "message": "Some content in the namespace has finalizers remaining: strimzi.io/topic-operator in 2 resource instances",
                 "reason": "SomeFinalizersRemain",
                 "status": "True",
