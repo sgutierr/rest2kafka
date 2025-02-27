@@ -17,5 +17,4 @@ datagrid:
   operatorGroupName: datagrid-operatorgroup
   subscriptionName: datagrid-operator  
 pipelines:
-  operatorGroupName: datagrid-operatorgroup
-  subscriptionName: datagrid-operator   
+  subscriptionName: pipelines-operator   
