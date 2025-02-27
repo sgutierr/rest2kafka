@@ -4,7 +4,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
   name: console-kafka-metrics
-  name: {{ .Values.demo.namespaceName }}  
+  namespace: {{ .Values.demo.namespaceName }}  
   labels:
     app: console
 data:
