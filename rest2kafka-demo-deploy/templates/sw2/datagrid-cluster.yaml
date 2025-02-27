@@ -2,7 +2,7 @@ apiVersion: infinispan.org/v1
 kind: Infinispan
 metadata:
   name: example-infinispan
-  namespace: {{ .Values.demo.namespaceName }} 
+  namespace: {{ .Values.demo.namespaceName }}
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
