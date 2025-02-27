@@ -5,7 +5,7 @@ metadata:
   labels:
     strimzi.io/cluster: my-cluster
   annotations:
-    argocd.argoproj.io/sync-wave: "1"    
+    argocd.argoproj.io/sync-wave: "2"    
 spec:
   authentication:
     type: scram-sha-512

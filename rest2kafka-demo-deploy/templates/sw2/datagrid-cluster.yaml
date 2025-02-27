@@ -4,7 +4,7 @@ metadata:
   name: example-infinispan
   namespace: {{ .Values.demo.namespaceName }} 
   annotations:
-    argocd.argoproj.io/sync-wave: "2"    
+    argocd.argoproj.io/sync-wave: "2"
 spec:
     service:
       type: DataGrid
