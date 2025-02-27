@@ -4,9 +4,9 @@ kind: Namespace
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
-    openshift.io/description: {{ .Values.strimzi.namespaceName }}
-    openshift.io/display-name: {{ .Values.strimzi.namespaceName }}
-  name: {{ .Values.strimzi.namespaceName }}
+    openshift.io/description: {{ .Values.demo.namespaceName }}
+    openshift.io/display-name: {{ .Values.demo.namespaceName }}
+  name: {{ .Values.demo.namespaceName }}
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
 ---
@@ -14,7 +14,7 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: {{ .Values.strimzi.operatorGroupName }}
-  namespace: {{ .Values.strimzi.namespaceName }}
+  namespace: {{ .Values.demo.namespaceName }}
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
@@ -24,7 +24,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: {{ .Values.strimzi.subscriptionName }}
-  namespace: {{ .Values.strimzi.namespaceName }}
+  namespace: {{ .Values.demo.namespaceName }}
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
@@ -39,7 +39,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: {{ .Values.datagrid.subscriptionName }}
-  namespace: {{ .Values.datagrid.namespaceName }}
+  namespace: {{ .Values.demo.namespaceName }}
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:

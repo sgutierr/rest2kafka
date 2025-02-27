@@ -1,0 +1,60 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: my-cluster
+spec:
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+  kafka:
+    authorization:
+      superUsers:
+        - CN=console-kafka-user1
+      type: simple
+    config:
+      allow.everyone.if.no.acl.found: 'true'
+      default.replication.factor: 1
+      inter.broker.protocol.version: '3.7'
+      min.insync.replicas: 1
+      offsets.topic.replication.factor: 1
+      transaction.state.log.min.isr: 1
+      transaction.state.log.replication.factor: 1
+    listeners:
+      - authentication:
+          type: scram-sha-512
+        name: plain
+        port: 9092
+        tls: false
+        type: internal
+      - authentication:
+          type: scram-sha-512
+        configuration:
+          bootstrap:
+            annotations:
+              eyefloaters.github.com/console-listener: 'true'
+         ## Change this host      
+            host: my-cluster-kafka-bootstrap.{{ .Values.demo.namespaceName }}.svc.cluster.local
+        name: secure
+        port: 9093
+        tls: true
+        type: route
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          key: kafka-metrics-config.yml
+          name: console-kafka-metrics         
+    replicas: 1
+    storage:
+      type: ephemeral
+    version: 3.7.0         
+  zookeeper:
+    livenessProbe:
+      initialDelaySeconds: 60
+      timeoutSeconds: 5   
+    readinessProbe:
+      initialDelaySeconds: 60
+      timeoutSeconds: 5
+    replicas: 1
+    storage:
+      type: ephemeral
