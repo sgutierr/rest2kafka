@@ -4,6 +4,8 @@ metadata:
   name: console-kafka-user1
   labels:
     strimzi.io/cluster: my-cluster
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"    
 spec:
   authentication:
     type: scram-sha-512

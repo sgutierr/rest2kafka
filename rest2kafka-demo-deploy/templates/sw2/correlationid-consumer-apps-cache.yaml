@@ -3,6 +3,8 @@ kind: Cache
 metadata:
   name: correlationid-consumer-applications-cache
   namespace: {{ .Values.demo.namespaceName }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"  
 spec:
   clusterName: example-infinispan
   name: correlationid-cache
