@@ -36,7 +36,7 @@ spec:
             annotations:
               eyefloaters.github.com/console-listener: 'true'
          ## Change this host      
-            host: my-cluster-kafka-bootstrap.appdev-streams.svc.cluster.local
+            host: my-cluster-kafka-bootstrap.{{ .Values.demo.namespaceName }}.svc.cluster.local
         name: secure
         port: 9093
         tls: true

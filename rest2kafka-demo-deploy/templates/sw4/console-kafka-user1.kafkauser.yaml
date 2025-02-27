@@ -10,6 +10,11 @@ metadata:
 spec:
   authentication:
     type: scram-sha-512
+    password:
+    valueFrom:
+      secretKeyRef:
+        name: kafka-user1-secret
+        key: user1pass   
   authorization:
     acls:
       - operations:
