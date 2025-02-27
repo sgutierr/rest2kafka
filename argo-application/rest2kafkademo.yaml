@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: rhdh2vm-demo-deploy
+  name: rest2kafka-demo-deploy
   namespace: openshift-gitops
 spec:
   destination:

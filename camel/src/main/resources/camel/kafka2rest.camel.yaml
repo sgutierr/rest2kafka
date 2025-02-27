@@ -1,0 +1,332 @@
+- restConfiguration:
+    apiComponent: openapi
+    apiContextRouteId: route-8945
+    component: netty-http
+    contextPath: /
+    host: 0.0.0.0
+    inlineRoutes: true
+    port: "{{camel.restConfiguration.port}}"
+    scheme: http
+- rest:
+    id: rest-d645
+    description: Rest Endpoint
+    bindingMode: "off"
+    post:
+      - id: post-1233
+        description: NIPC validation endpoint
+        bindingMode: "off"
+        path: /request
+        to: direct:SentRequest
+    securityDefinitions:
+      oauth2:
+        scopes: []
+- route:
+    id: Main route
+    description: Main Route
+    from:
+      id: from-600f
+      description: Send request endpoint
+      uri: direct:SentRequest
+      parameters: {}
+      steps:
+        - to:
+            id: to-15c5
+            description: Show log
+            uri: log
+            parameters:
+              loggerName: LogRequest
+        - setHeader:
+            id: setHeader-8799
+            description: CorrelationId header
+            expression:
+              simple:
+                id: simple-432b
+                expression: ${exchangeId}
+            name: correlationId
+        - setHeader:
+            id: setHeader-95ea
+            description: Example of expression jq
+            expression:
+              simple:
+                id: simple-228f
+                expression: ${jq(.name)}
+            name: username
+        - multicast:
+            id: multicast-3b3c
+            description: Multicast
+            steps:
+              - to:
+                  id: to-7ab2
+                  description: Put cache
+                  uri: direct
+                  parameters:
+                    name: putCache
+              - to:
+                  id: to-3e1b
+                  description: ProcessorLayer Kafka
+                  uri: kafka:request
+                  parameters:
+                    brokers: "{{camel.component.kafka.brokers}}"
+                    saslJaasConfig: "{{camel.component.kafka.saslJaasConfig}}"
+                    saslMechanism: "{{camel.component.kafka.saslMechanism}}"
+                    securityProtocol: "{{camel.component.kafka.securityProtocol}}"
+                    sslTruststoreLocation: "{{camel.component.kafka.sslTruststoreLocation}}"
+                    sslTruststorePassword: "{{camel.component.kafka.sslTruststorePassword}}"
+              - to:
+                  id: to-8e26
+                  description: Response
+                  uri: direct:readCache
+                  parameters: {}
+        - to:
+            id: to-ca27
+            uri: log
+            parameters:
+              loggerName: KafkaLog
+              showAll: true
+    nodePrefixId: route-ac1
+- route:
+    id: Processor-Layer
+    description: Processor Layer
+    from:
+      id: from-d14b
+      description: Consuming Orders KAFKA topic request
+      uri: kafka:request
+      parameters:
+        brokers: "{{camel.component.kafka.brokers}}"
+        saslJaasConfig: "{{camel.component.kafka.saslJaasConfig}}"
+        saslMechanism: "{{camel.component.kafka.saslMechanism}}"
+        securityProtocol: "{{camel.component.kafka.securityProtocol}}"
+        sslTruststoreLocation: "{{camel.component.kafka.sslTruststoreLocation}}"
+        sslTruststorePassword: "{{camel.component.kafka.sslTruststorePassword}}"
+      steps:
+        - to:
+            id: to-09b5
+            uri: log
+            parameters:
+              loggerName: PROCESO_LAYER_LOG
+              showAll: true
+              showAllProperties: true
+              showHeaders: true
+        - setHeader:
+            id: setHeader-470a
+            expression:
+              simple:
+                id: simple-2d33
+                expression: ${jq(.name)}
+            name: username
+        - setBody:
+            id: setBody-a332
+            description: Make Response
+            expression:
+              simple:
+                id: simple-7af7
+                expression: '{ "correlationId": "${header.correlationId}","name":
+                  "${header.username}","result":"${body}"}'
+        - to:
+            id: to-fb09
+            description: Sent results to KAFKA Topic response
+            uri: kafka
+            parameters:
+              brokers: "{{camel.component.kafka.brokers}}"
+              saslJaasConfig: "{{camel.component.kafka.saslJaasConfig}}"
+              saslMechanism: "{{camel.component.kafka.saslMechanism}}"
+              securityProtocol: "{{camel.component.kafka.securityProtocol}}"
+              sslTruststoreLocation: "{{camel.component.kafka.sslTruststoreLocation}}"
+              sslTruststorePassword: "{{camel.component.kafka.sslTruststorePassword}}"
+              topic: response
+    nodePrefixId: route-a7c
+- route:
+    id: Put-Cache
+    description: Put correlationId Cache
+    from:
+      id: from-1834
+      description: Put CorrelationId Cache
+      uri: direct
+      parameters:
+        name: putCache
+      steps:
+        - setHeader:
+            id: setHeader-46e4
+            description: Set Key value in Infinispan
+            expression:
+              simple:
+                id: simple-5462
+                expression: ${header.correlationId}
+            name: CamelInfinispanKey
+        - setHeader:
+            id: setHeader-c2d3
+            description: Set Value in Infinispan
+            expression:
+              constant:
+                id: constant-aeb4
+                expression: empty
+            name: CamelInfinispanValue
+        - setHeader:
+            id: setHeader-91ce
+            description: Set Infinispan Operation
+            expression:
+              constant:
+                id: constant-85a2
+                expression: InfinispanOperation.PUT
+            name: InfinispanConstants.OPERATION
+        - to:
+            id: to-66c2
+            description: datagrid
+            uri: infinispan
+            parameters:
+              cacheName: correlationid-consumer-applications-cache
+              hosts: "{{camel.component.infinispan.hosts}}"
+              password: "{{camel.component.infinispan.password}}"
+              saslMechanism: "{{camel.component.infinispan.saslMechanism}}"
+              secure: "{{camel.component.infinispan.secure}}"
+              securityRealm: default
+              securityServerName: infinispan
+              username: "{{camel.component.infinispan.username}}"
+    nodePrefixId: route-491
+- route:
+    id: Dispatch-response
+    description: Dispatch Responses
+    from:
+      id: from-e673
+      description: Process Responses
+      uri: kafka:response
+      parameters:
+        brokers: "{{camel.component.kafka.brokers}}"
+        saslJaasConfig: "{{camel.component.kafka.saslJaasConfig}}"
+        saslMechanism: "{{camel.component.kafka.saslMechanism}}"
+        securityProtocol: "{{camel.component.kafka.securityProtocol}}"
+        sslTruststoreLocation: "{{camel.component.kafka.sslTruststoreLocation}}"
+        sslTruststorePassword: "{{camel.component.kafka.sslTruststorePassword}}"
+      steps:
+        - setHeader:
+            id: setHeader-4c4d
+            expression:
+              simple:
+                id: simple-467b
+                expression: ${header.correlationId}
+                resultType: java.lang.String
+            name: CamelInfinispanKey
+        - setHeader:
+            id: setHeader-7a0a
+            expression:
+              simple:
+                id: simple-c449
+                expression: ${body}
+            name: CamelInfinispanValue
+        - setHeader:
+            id: setHeader-c6d3
+            expression:
+              constant:
+                id: constant-cd7c
+                expression: InfinispanOperation.PUT
+                resultType: java.lang.String
+            name: InfinispanOperation.PUT
+        - to:
+            id: to-851b
+            uri: log
+            parameters:
+              loggerName: dispatch_logger
+              showAll: true
+              showAllProperties: true
+              showExchangeId: true
+              showHeaders: true
+        - to:
+            id: to-c6db
+            description: PUT in cache
+            uri: infinispan:correlationid-consumer-applications-cache
+            parameters:
+              hosts: "{{camel.component.infinispan.hosts}}"
+              password: "{{camel.component.infinispan.password}}"
+              saslMechanism: "{{camel.component.infinispan.saslMechanism}}"
+              secure: "{{camel.component.infinispan.secure}}"
+              securityRealm: default
+              securityServerName: infinispan
+              username: "{{camel.component.infinispan.username}}"
+    nodePrefixId: route-d14
+- route:
+    id: Get-Cache
+    description: Get cache value from response
+    from:
+      id: from-3d6d
+      uri: direct
+      parameters:
+        name: readCache
+      steps:
+        - setBody:
+            id: setBody-d50f
+            expression:
+              constant:
+                id: constant-6b0c
+                expression: empty
+        - loop:
+            id: loop-3d70
+            steps:
+              - log:
+                  id: log-75ad
+                  logName: exchangeid
+                  message: "EXCHANGEID: ${header.correlationId}"
+              - setHeaders:
+                  id: setHeaders-daf6
+                  description: DataGrid Headers
+                  headers:
+                    - id: setHeader-eb04
+                      expression:
+                        constant:
+                          id: constant-3ee9
+                          expression: InfinispanOperation.GET
+                      name: InfinispanOperation.GET
+                    - id: setHeader-5ba6
+                      expression:
+                        simple:
+                          id: simple-ab1c
+                          expression: ${header.correlationId}
+                      name: CamelInfinispanKey
+              - to:
+                  id: to-0a7f
+                  description: GET RESPONSE From Cache
+                  uri: infinispan
+                  parameters:
+                    cacheName: correlationid-consumer-applications-cache
+                    hosts: "{{camel.component.infinispan.hosts}}"
+                    operation: GET
+                    password: "{{camel.component.infinispan.password}}"
+                    saslMechanism: "{{camel.component.infinispan.saslMechanism}}"
+                    secure: "{{camel.component.infinispan.secure}}"
+                    securityRealm: default
+                    securityServerName: infinispan
+                    username: "{{camel.component.infinispan.username}}"
+              - log:
+                  id: log-fa35
+                  logName: Loop iterator
+                  message: ${exchangeProperty.CamelLoopIndex}
+              - choice:
+                  id: choice-ae08
+                  otherwise:
+                    id: otherwise-045d
+                  when:
+                    - id: when-d3d3
+                      steps:
+                        - setBody:
+                            id: setBody-5ae3
+                            expression:
+                              simple:
+                                id: simple-6900
+                                expression: |-
+                                  "{
+                                      result: timeout
+                                    }"
+                      expression:
+                        simple:
+                          id: simple-1f8a
+                          expression: ${exchangeProperty.CamelLoopIndex} > 500
+            doWhile: true
+            expression:
+              simple:
+                id: simple-5ead
+                expression: ${body} == "empty"
+        - log:
+            id: log-68fe
+            description: cache
+            logName: response
+            message: "RESPONSE: ${body}"
+    nodePrefixId: route-fbf
