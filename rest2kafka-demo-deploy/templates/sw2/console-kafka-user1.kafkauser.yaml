@@ -2,6 +2,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
   name: console-kafka-user1
+  name: {{ .Values.demo.namespaceName }}  
   labels:
     strimzi.io/cluster: my-cluster
   annotations:
