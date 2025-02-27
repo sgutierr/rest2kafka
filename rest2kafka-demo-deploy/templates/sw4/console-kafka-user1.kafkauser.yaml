@@ -11,10 +11,10 @@ spec:
   authentication:
     type: scram-sha-512
     password:
-    valueFrom:
-      secretKeyRef:
-        name: kafka-user1-secret
-        key: user1pass   
+      valueFrom:
+        secretKeyRef:
+          key: user1pass
+          name: console-kafka-user1    
   authorization:
     acls:
       - operations:
