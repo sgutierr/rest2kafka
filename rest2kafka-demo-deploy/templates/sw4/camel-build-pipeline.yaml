@@ -1,0 +1,89 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: new-pipeline
+  namespace: {{ .Values.demo.namespaceName }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "4" 
+spec:
+  finally:
+    - name: maven
+      params:
+        - name: MAVEN_IMAGE
+          value: 'gcr.io/cloud-builders/mvn@sha256:57523fc43394d6d9d2414ee8d1c85ed7a13460cbb268c3cd16d28cfb3859e641'
+        - name: GOALS
+          value:
+            - package
+            - '-Popenshift'
+            - '-DSkiptest'
+        - name: MAVEN_MIRROR_URL
+          value: ''
+        - name: SERVER_USER
+          value: ''
+        - name: SERVER_PASSWORD
+          value: ''
+        - name: PROXY_USER
+          value: ''
+        - name: PROXY_PASSWORD
+          value: ''
+        - name: PROXY_PORT
+          value: ''
+        - name: PROXY_HOST
+          value: ''
+        - name: PROXY_NON_PROXY_HOSTS
+          value: ''
+        - name: PROXY_PROTOCOL
+          value: http
+        - name: CONTEXT_DIR
+          value: .
+      taskRef:
+        kind: Task
+        name: maven
+      workspaces:
+        - name: source
+          workspace: my-working-source
+        - name: maven-settings
+          workspace: my-working-source
+  tasks:
+    - name: git-clone
+      params:
+        - name: url
+          value: 'https://github.com/sgutierr/rest2kafka.git'
+        - name: revision
+          value: ''
+        - name: refspec
+          value: ''
+        - name: submodules
+          value: 'true'
+        - name: depth
+          value: '1'
+        - name: sslVerify
+          value: 'true'
+        - name: crtFileName
+          value: ca-bundle.crt
+        - name: subdirectory
+          value: ''
+        - name: sparseCheckoutDirectories
+          value: ''
+        - name: deleteExisting
+          value: 'true'
+        - name: httpProxy
+          value: ''
+        - name: httpsProxy
+          value: ''
+        - name: noProxy
+          value: ''
+        - name: verbose
+          value: 'true'
+        - name: gitInitImage
+          value: 'gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.40.2'
+        - name: userHome
+          value: /home/git
+      taskRef:
+        kind: Task
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: my-working-source
+  workspaces:
+    - name: my-working-source
