@@ -30,6 +30,7 @@ metadata:
 spec:
   channel: stable
   installPlanApproval: Automatic
-  name: amqstreams.v2.8.0-0-0.1738265624.p
+  name: amq-streams
   source: redhat-operators
   sourceNamespace: openshift-marketplace
+  startingCSV: amqstreams.v2.8.0-0-0.1738265624.p  

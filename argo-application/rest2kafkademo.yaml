@@ -27,7 +27,7 @@ spec:
         - name: rhn.clientSecret
           value: <here-goes-your-redhat-customer-portal-clientSecret>
     path: rest2kafka-demo-deploy
-    repoURL: 'https://github.com/redhat-iberia/rhdh2vm.git'
+    repoURL: 'https://github.com/sgutierr/rest2kafka.git'
     targetRevision: HEAD
   syncPolicy:
     automated:

@@ -28,8 +28,9 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
-  channel: 8.4.x
+  channel: stable
   installPlanApproval: Automatic
   name: datagrid
   source: redhat-operators
   sourceNamespace: openshift-marketplace
+  startingCSV: datagrid-operator.v8.5.5
