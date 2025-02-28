@@ -35,7 +35,7 @@ spec:
         - name: PROXY_PROTOCOL
           value: http
         - name: CONTEXT_DIR
-          value: .
+          value: /camel
       taskRef:
         kind: Task
         name: maven

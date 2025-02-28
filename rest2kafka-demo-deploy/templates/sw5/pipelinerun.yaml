@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: simplerun
+  namespace: appdev-streams
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"    
+spec:
+  params:
+    - name: git-url
+      value: 'https://github.com/sgutierr/rest2kafka.git'
+    - name: git-revision
+      value: main
+  pipelineRef:
+    name: new-pipeline
+  serviceAccountName: pipeline
+  timeout: 1h0m0s
+  workspaces:
+    - name: my-working-source
+      persistentVolumeClaim: 
+        claimName: my-working-source
