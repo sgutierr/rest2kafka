@@ -10,7 +10,7 @@ spec:
     - name: maven
       params:
         - name: MAVEN_IMAGE
-          value: 'registry.redhat.io/ubi8/openjdk-17-runtime@sha256:44aa4ecdfa7a17513aff2fbd4368b87df1e3a9c576ec673ebaa11fa9afc3d79e'
+          value: 'quay.io/rh_integration/camel-quarkus-qe-test-container:3.8.x-openjdk21'
         - name: GOALS
           value:
             - package
