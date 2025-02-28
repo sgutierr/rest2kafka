@@ -10,6 +10,7 @@ spec:
       type: DataGrid
     security:
       endpointAuthentication: false
+      endpointSecretName: connect-secret 
       endpointEncryption:
         type: None
         clientCert: None
