@@ -14,7 +14,4 @@ spec:
       endpointEncryption:
         type: None
         clientCert: None
-    replicas: 1
-    expose:
-      host: dg.{{ .Values.demo.namespaceName }}.apps.k8s.dev.local
-      type: Route    
+    replicas: 1  
