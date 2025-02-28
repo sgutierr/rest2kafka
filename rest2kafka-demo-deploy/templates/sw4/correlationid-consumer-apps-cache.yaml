@@ -7,5 +7,11 @@ metadata:
     argocd.argoproj.io/sync-wave: "4"  
 spec:
   clusterName: example-infinispan
-  name: correlationid-cache
-  template: <replicated-cache mode="SYNC" statistics="true"><encoding media-type="application/x-protostream"/><expiration lifespan="300000" max-idle="-1"/><memory max-count="1000000" when-full="REMOVE"/><persistence passivation="false"><file-store/></persistence></replicated-cache>
+  name: correlationid-consumer-applications-cache
+  template: |
+    distributedCache: 
+      owners: "2"
+      mode: "SYNC"
+      statistics: "true"
+      encoding: 
+        mediaType: "application/x-protostream"
