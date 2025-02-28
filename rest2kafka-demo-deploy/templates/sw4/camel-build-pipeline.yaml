@@ -10,7 +10,7 @@ spec:
     - name: maven
       params:
         - name: MAVEN_IMAGE
-          value: 'quay.io/rh_integration/camel-quarkus-qe-test-container:3.8.x-openjdk21'
+          value: 'gcr.io/cloud-builders/mvn@sha256:572fb9b22c995b812110a2d279a4de457ab14ac48ed84125530e72ca36d6c527'
         - name: GOALS
           value:
             - package
