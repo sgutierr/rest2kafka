@@ -14,7 +14,7 @@ spec:
       valueFrom:
         secretKeyRef:
           key: user1pass
-          name: console-kafka-user1    
+          name: console-kafka-user   
   authorization:
     acls:
       - operations:
