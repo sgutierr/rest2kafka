@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "4"      
 spec:
-  hostname: streams-console.apps.cluster-hnlkm.hnlkm.gcp.redhatworkshops.io
+  hostname: streams-console.{{ .Values.cluster.domain }}
   kafkaClusters:
     - credentials:
         kafkaUser:
