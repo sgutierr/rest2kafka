@@ -8,7 +8,7 @@ metadata:
 spec:
   hostname: streams-console.apps.cluster-hnlkm.hnlkm.gcp.redhatworkshops.io
   kafkaClusters:
-      credentials:
+    - credentials:
         kafkaUser:
           name: console-kafka-user1
       listener: plain
