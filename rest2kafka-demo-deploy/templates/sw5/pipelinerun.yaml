@@ -18,6 +18,9 @@ spec:
   pipelineRef:
     name: new-pipeline
   serviceAccountName: pipeline
+  podTemplate:
+    securityContext:
+      fsGroup: 65532
   timeout: 1h0m0s
   workspaces:
     - name: my-working-source
