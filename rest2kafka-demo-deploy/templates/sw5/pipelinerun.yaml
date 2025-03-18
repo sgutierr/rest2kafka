@@ -13,8 +13,6 @@ spec:
       value: main
     - name: sslVerify
       value: 'false'      
-    - name: deleteExisting
-      value: 'false'      
   pipelineRef:
     name: new-pipeline
   serviceAccountName: pipeline
