@@ -37,7 +37,7 @@ mvn clean package -Popenshift -DSkiptest
 
 ## TRUE NIPC
 
-    POST http://localhost:8081/orders
+    POST http://localhost:8081/resquest
     {
         "name":"mysurnam108",
         "nipc": "123456789",
@@ -54,7 +54,7 @@ will see:
 
 ## FALSE NIPC
 
-    POST http://localhost:8081/orders
+    POST http://localhost:8081/request
     {
         "name":"mysurnam110",
         "nipc": "523456789",
