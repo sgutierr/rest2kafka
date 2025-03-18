@@ -1,0 +1,14 @@
+apiVersion: console.streamshub.github.com/v1alpha1
+kind: Console
+metadata:
+  name: example-console
+  namespace: appdev-streams
+spec:
+  hostname: streams-console.apps.cluster-hnlkm.hnlkm.gcp.redhatworkshops.io
+  kafkaClusters:
+      credentials:
+        kafkaUser:
+          name: console-kafka-user1
+      listener: plain
+      name: my-cluster
+      namespace: appdev-streams

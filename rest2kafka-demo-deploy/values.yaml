@@ -9,7 +9,7 @@ rhn:
 demo:
   namespaceName: appdev-streams
 cluster:
-  domain: apps.cluster-mm7s4.mm7s4.sandbox171.opentlc.com
+  domain: apps.cluster-hnlkm.hnlkm.gcp.redhatworkshops.io
 strimzi:
   operatorGroupName: kafka-operatorgroup
   subscriptionName: amqstreams.v2.8.0-0-0.1738265624.p
