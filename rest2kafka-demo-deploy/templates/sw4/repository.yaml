@@ -1,0 +1,7 @@
+apiVersion: pipelinesascode.tekton.dev/v1alpha1
+kind: Repository
+metadata:
+  name: git-rest-2-kafka-git
+  namespace: appdev-streams
+spec:
+  url: 'https://github.com/sgutierr/rest2kafka.git'

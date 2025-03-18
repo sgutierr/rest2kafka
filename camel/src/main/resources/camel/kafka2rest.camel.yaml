@@ -114,6 +114,17 @@
                 id: simple-2d33
                 expression: ${jq(.name)}
             name: username
+        - setHeader:
+            id: setHeader-2903
+            expression:
+              simple:
+                expression: ${jq(.nipc)}
+            name: nipc
+        - bean:
+            id: bean-5988
+            description: Call bean NIPC  validation
+            method: validaContribuinte(${header.nipc})
+            ref: NipcValidator
         - setBody:
             id: setBody-a332
             description: Make Response
@@ -330,3 +341,6 @@
             logName: response
             message: "RESPONSE: ${body}"
     nodePrefixId: route-fbf
+- beans:
+    - name: NipcValidator
+      type: org.demo.http2kafka.NipcValidator
