@@ -11,6 +11,10 @@ spec:
       value: 'https://github.com/sgutierr/rest2kafka.git'
     - name: git-revision
       value: main
+    - name: sslVerify
+      value: 'false'      
+    - name: deleteExisting
+      value: 'false'      
   pipelineRef:
     name: new-pipeline
   serviceAccountName: pipeline
