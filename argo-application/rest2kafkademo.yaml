@@ -11,21 +11,17 @@ spec:
     helm:
       parameters:
         - name: cluster.domain
-          value: <here-goes-your-openshift-cluster-domain>
-        - name: github.pat
-          value: <here-goes-your-github-pat>
-        - name: rhn.username
-          value: <here-goes-your-redhat-customer-portal-username>
-        - name: rhn.password
-          value: <here-goes-your-redhat-customer-portal-password>
-        - name: rhn.poolId
-          value: <here-goes-your-ansible-subscription-poolId>
-        - name: automationhub.apiToken
-          value: <here-goes-your-redhat-automationhub-apiToken>
-        - name: rhn.clientId
-          value: <here-goes-your-redhat-customer-portal-clientId>
-        - name: rhn.clientSecret
-          value: <here-goes-your-redhat-customer-portal-clientSecret>
+          value: apps.cluster-hnlkm.hnlkm.gcp.redhatworkshops.io
+        - name: demo.namespace
+          value: appdev-streams
+        - name: strimzi.subscriptionName
+          value: strimzi-operator
+        - name: strimzi.operatorGroupName
+          value: strimzi-operatorgroup
+        - name: datagrid.subscriptionName
+          value: datagrid-operator
+        - name: datagrid.operatorGroupName
+          value: datagrid-operatorgroup     
     path: rest2kafka-demo-deploy
     repoURL: 'https://github.com/sgutierr/rest2kafka.git'
     targetRevision: HEAD

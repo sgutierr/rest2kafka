@@ -64,6 +64,10 @@ The installation creates the streams of Kafka, kafka console, openshift pipeline
 
 # Components installed
 
+This is a diagram of the solution architecture
+
+![Image1](images/image2.png)
+
 ## Camel
     
    There are 2 folders representing the Camel integration, both work in the RH environment with Kafka cluster in openshift and Data Grid running locally (Development/software/datagrid/redhat-datagrid-8.5.0-server/bin$/server.sh) :
